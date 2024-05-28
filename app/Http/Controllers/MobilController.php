@@ -7,6 +7,7 @@ use App\Models\Mobil_asset;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Storage;
@@ -144,8 +145,9 @@ class MobilController extends Controller
                 'unggulan' => 'Tidak',
                 'foto' => "$path/$file_name"
             ]);
-
+            Log::info('Data mobil berhasil disimpan: ' . json_encode(['id' => $id_mobil, 'merk' => $request->merk]));
             echo json_encode(['status' => TRUE]);
+
         }
     }
 
@@ -159,7 +161,7 @@ class MobilController extends Controller
     {
         $id = $request->input('q');
         $mobil = Mobil::find($id);
-
+        Log::info('Berhasil edit data mobil');
         echo json_encode(['status' => TRUE, 'isi' => $mobil]);
     }
 
@@ -301,7 +303,7 @@ class MobilController extends Controller
         $id = $request->input('q');
         $mobil = Mobil::find($id);
         $mobil->delete();
-
+        Log::info('Berhasil Hapus data mobil');
         echo json_encode(['status' => TRUE]);
     }
 }
